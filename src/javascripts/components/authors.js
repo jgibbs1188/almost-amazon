@@ -1,8 +1,6 @@
 const showAuthors = (array) => {
   document.querySelector('#store').innerHTML = '';
   // CREATE A BUTTON TO ADD BOOKS
-
-  document.querySelector('#store').innerHTML = '';
   document.querySelector('#form-container').innerHTML = '';
 
   array.forEach((item) => {
