@@ -32,9 +32,17 @@ const domEvents = () => {
     }
 
     // ADD CLICK EVENT FOR DELETING AN AUTHOR
+    if (e.target.id.includes('delete-author')) {
+      if (window.confirm('Want to delete?')) {
+        console.warn('CLICKED DELETE AUTHOR', e.target.id);
+      }
+    }
     // ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
     // ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
     // ADD CLICK EVENT FOR EDITING AN AUTHOR
+    if (e.target.id.includes('edit-author-btn')) {
+      console.warn('CLICKED EDIT Author', e.target.id);
+    }
   });
 };
 
