@@ -4,6 +4,7 @@ const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
     // CLICK EVENT FOR DELETING A BOOK
     if (e.target.id.includes('delete-book')) {
+      // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
         console.warn('CLICKED DELETE BOOK', e.target.id);
       }
@@ -31,9 +32,17 @@ const domEvents = () => {
     }
 
     // ADD CLICK EVENT FOR DELETING AN AUTHOR
+    if (e.target.id.includes('delete-author')) {
+      if (window.confirm('Want to delete?')) {
+        console.warn('CLICKED DELETE AUTHOR', e.target.id);
+      }
+    }
     // ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
     // ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
     // ADD CLICK EVENT FOR EDITING AN AUTHOR
+    if (e.target.id.includes('edit-author-btn')) {
+      console.warn('CLICKED EDIT Author', e.target.id);
+    }
   });
 };
 
