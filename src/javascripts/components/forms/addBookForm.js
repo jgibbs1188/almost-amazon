@@ -1,4 +1,5 @@
 import selectAuthor from './selectAuthor';
+import createBookSubmitEvent from '../../events/formEvents';
 
 const addBookForm = () => {
   document.querySelector('#store').innerHTML = '';
@@ -15,7 +16,7 @@ const addBookForm = () => {
       </div>
       <div class="form-group">
         <label for="price">Price</label>
-        <input type="text" class="form-control" id="price" placeholder="Book Price" required>
+        <input type="number" step="0.01" class="form-control" id="price" placeholder="Book Price" required>
       </div>
       <div class="form-group" id="select-author">
       </div>
@@ -27,6 +28,8 @@ const addBookForm = () => {
     </form>`;
 
   selectAuthor();
+
+  document.querySelector('#submit-book-form').addEventListener('submit', createBookSubmitEvent);
 };
 
 export default addBookForm;
