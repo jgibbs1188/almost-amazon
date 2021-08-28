@@ -13,7 +13,24 @@ const getAuthors = () => new Promise((resolve, reject) => {
 
 // DELETE AUTHOR
 // CREATE AUTHOR
+const createAuthor = (newAuthorData) => new Promise((resolve, reject) => {
+  axios.post(`${dbUrl}/authors.json`, newAuthorData)
+    .then((response) => {
+      const firebaseKey = response.data.name;
+      axios.patch(`${dbUrl}/authors/${firebaseKey}.json`, { firebaseKey })
+        .then(() => getAuthors().then((allAuthors) => resolve(allAuthors)));
+    })
+    .catch((errors) => reject(errors));
+});
 // UPDATE AUTHOR
 // SEARCH AUTHORS
 
-export default getAuthors;
+// FAVORITE AUTHORS
+const favoriteAuthors = () => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/authors.json?orderBy="favorite"&equalTo=true`)
+    .then((response) => resolve(Object.values(response.data)))
+    .catch((error) => reject(error));
+  // This works too .catch(reject);
+});
+
+export { getAuthors, createAuthor, favoriteAuthors };

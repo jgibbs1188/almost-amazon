@@ -1,4 +1,6 @@
+import { showBooks } from '../components/books';
 import addBookForm from '../components/forms/addBookForm';
+import { deleteBook } from '../helpers/data/bookData';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -7,6 +9,8 @@ const domEvents = () => {
       // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
         console.warn('CLICKED DELETE BOOK', e.target.id);
+        const [, id] = e.target.id.split('--');
+        deleteBook(id).then(showBooks);
       }
     }
 
@@ -34,6 +38,10 @@ const domEvents = () => {
       }
     }
     // ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
+    if (e.target.id.includes('add-author-btn')) {
+      console.warn('CLICKED ADD AUTHOR BUTTON', e.target.id);
+      // addAuthorForm();
+    }
     // ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
     // ADD CLICK EVENT FOR EDITING AN AUTHOR
     if (e.target.id.includes('edit-author-btn')) {

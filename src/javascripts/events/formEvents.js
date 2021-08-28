@@ -1,5 +1,7 @@
 import { showBooks } from '../components/books';
 import { createBook } from '../helpers/data/bookData';
+import { createAuthor } from '../helpers/data/authorData';
+import { showAuthors } from '../components/authors';
 
 const createBookSubmitEvent = () => {
   const formData = {
@@ -12,4 +14,13 @@ const createBookSubmitEvent = () => {
   createBook(formData).then((allBooks) => showBooks(allBooks));
 };
 
-export default createBookSubmitEvent;
+const createAuthorSubmitEvent = () => {
+  const formData = {
+    email: document.querySelector('#email').value,
+    first_name: document.querySelector('#first_name').checked,
+    last_name: document.querySelector('#last_name').value,
+  };
+  createAuthor(formData).then((allAuthors) => showAuthors(allAuthors));
+};
+
+export { createBookSubmitEvent, createAuthorSubmitEvent };

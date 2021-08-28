@@ -1,4 +1,8 @@
+import { showAuthors } from '../components/authors';
+import { showBooks } from '../components/books';
 import signOut from '../helpers/auth/signOut';
+import { getAuthors, favoriteAuthors } from '../helpers/data/authorData';
+import { booksOnSale, getBooks } from '../helpers/data/bookData';
 
 // navigation events
 const navigationEvents = () => {
@@ -9,11 +13,13 @@ const navigationEvents = () => {
   // BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
     console.warn('Sale Books');
+    booksOnSale().then(showBooks);
   });
 
   // ALL BOOKS
   document.querySelector('#all-books').addEventListener('click', () => {
     console.warn('All Books');
+    getBooks().then(showBooks);
   });
 
   // SEARCH
@@ -35,6 +41,13 @@ const navigationEvents = () => {
 
   document.querySelector('#authors').addEventListener('click', () => {
     console.warn('All Authors');
+    getAuthors().then(showAuthors);
+  });
+
+  // Favorite Authors
+  document.querySelector('#favorite-authors').addEventListener('click', () => {
+    console.warn('Favorite Authors');
+    favoriteAuthors().then(showAuthors);
   });
 
   // 1. When a user clicks the authors link, make a call to firebase to get all authors
