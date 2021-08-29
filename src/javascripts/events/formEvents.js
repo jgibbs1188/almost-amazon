@@ -16,9 +16,9 @@ const createBookSubmitEvent = () => {
 
 const createAuthorSubmitEvent = () => {
   const formData = {
-    email: document.querySelector('#email').value,
     first_name: document.querySelector('#first_name').checked,
     last_name: document.querySelector('#last_name').value,
+    email: document.querySelector('#email').value,
   };
   createAuthor(formData).then((allAuthors) => showAuthors(allAuthors));
 };

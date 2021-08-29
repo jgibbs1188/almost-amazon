@@ -13,11 +13,18 @@ const getBooks = () => new Promise((resolve, reject) => {
 
 // DELETE BOOK
 const deleteBook = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.delete(`${dbUrl}books/${firebaseKey}.json`)
+  axios.delete(`${dbUrl}/books/${firebaseKey}.json`)
     .then(() => {
       getBooks().then(resolve);
     })
-    .catch((error) => reject(error));
+    .catch(reject);
+});
+
+// GET SINGLE BOOK
+const getSingleBook = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/books/${firebaseKey}.json`)
+    .then((response) => resolve(response.data))
+    .catch((errors) => reject(errors));
 });
 
 // CREATE BOOK
@@ -31,6 +38,12 @@ const createBook = (newBookData) => new Promise((resolve, reject) => {
     .catch((errors) => reject(errors));
 });
 // UPDATE BOOK
+const updateBook = (bookObj) => new Promise((resolve, reject) => {
+  axios.patch(`${dbUrl}/books/${bookObj.firebaseKey}.json`, bookObj)
+    .then(() => getBooks().then(resolve))
+    .catch(reject);
+});
+
 // SEARCH BOOKS
 
 // FILTER BOOKS ON SALE
@@ -45,5 +58,7 @@ export {
   getBooks,
   createBook,
   booksOnSale,
-  deleteBook
+  deleteBook,
+  getSingleBook,
+  updateBook
 };
