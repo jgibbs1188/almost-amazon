@@ -12,13 +12,11 @@ const navigationEvents = () => {
 
   // BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
-    console.warn('Sale Books');
     booksOnSale().then(showBooks);
   });
 
   // ALL BOOKS
   document.querySelector('#all-books').addEventListener('click', () => {
-    console.warn('All Books');
     getBooks().then(showBooks);
   });
 
@@ -40,13 +38,11 @@ const navigationEvents = () => {
   // FIXME: STUDENTS Create an event listener for the Authors
 
   document.querySelector('#authors').addEventListener('click', () => {
-    console.warn('All Authors');
     getAuthors().then(showAuthors);
   });
 
   // Favorite Authors
   document.querySelector('#favorite-authors').addEventListener('click', () => {
-    console.warn('Favorite Authors');
     favoriteAuthors().then(showAuthors);
   });
 
