@@ -91,6 +91,7 @@ const domEvents = () => {
         email: document.querySelector('#email').value,
         first_name: document.querySelector('#firstName').value,
         last_name: document.querySelector('#lastName').value,
+        favorite: document.querySelector('#favorite').checked,
         firebaseKey
       };
 
@@ -104,7 +105,7 @@ const domEvents = () => {
       getSingleAuthor(id).then((authorObj) => editAuthorForm(authorObj));
     }
 
-    // CLICK EVENT FOR EDITING A BOOK
+    // CLICK EVENT FOR EDITING AN AUTHOR
     if (e.target.id.includes('update-author')) {
       e.preventDefault();
       const [, firebaseKey] = e.target.id.split('--');
