@@ -1,5 +1,5 @@
 import selectAuthor from './selectAuthor';
-// import { createBookSubmitEvent } from '../../events/formEvents';
+import { createBookSubmitEvent } from '../../events/formEvents';
 
 const addBookForm = (obj = {}) => {
   document.querySelector('#store').innerHTML = '';
@@ -30,7 +30,7 @@ const addBookForm = (obj = {}) => {
 
   selectAuthor(`${obj.author_id || ''}`);
 
-  // document.querySelector('#submit-book-form').addEventListener('submit', createBookSubmitEvent);
+  document.querySelector('#submit-book-form').addEventListener('submit', createBookSubmitEvent);
 };
 
 export default addBookForm;

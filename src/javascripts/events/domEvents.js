@@ -14,6 +14,7 @@ import {
   getSingleAuthor
 } from '../helpers/data/authorData';
 import addAuthorForm from '../components/forms/addAuthorForm';
+import editAuthorForm from '../components/forms/editAuthorForm';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -40,7 +41,7 @@ const domEvents = () => {
         image: document.querySelector('#image').value,
         price: document.querySelector('#price').value,
         sale: document.querySelector('#sale').checked,
-        author_id: document.querySelector('#author_id').value
+        author_id: document.querySelector('#select-author').value
       };
 
       createBook(bookObject).then((booksArray) => showBooks(booksArray));
@@ -73,7 +74,6 @@ const domEvents = () => {
     if (e.target.id.includes('delete-author')) {
       // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
-        console.warn('CLICKED DELETE AUTHOR', e.target.id);
         const [, id] = e.target.id.split('--');
         deleteAuthor(id).then(showAuthors);
       }
@@ -86,10 +86,12 @@ const domEvents = () => {
     // ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('submit-author')) {
       e.preventDefault();
+      const [, firebaseKey] = e.target.id.split('--');
       const authorObject = {
         email: document.querySelector('#email').value,
-        first_name: document.querySelector('#first_name').value,
-        last_name: document.querySelector('#last_name').value,
+        first_name: document.querySelector('#firstName').value,
+        last_name: document.querySelector('#lastName').value,
+        firebaseKey
       };
 
       createAuthor(authorObject).then(showAuthors);
@@ -99,7 +101,7 @@ const domEvents = () => {
     if (e.target.id.includes('edit-author-btn')) {
       const [, id] = e.target.id.split('--');
 
-      getSingleAuthor(id).then((authorObj) => addAuthorForm(authorObj));
+      getSingleAuthor(id).then((authorObj) => editAuthorForm(authorObj));
     }
 
     // CLICK EVENT FOR EDITING A BOOK
@@ -110,6 +112,7 @@ const domEvents = () => {
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
         email: document.querySelector('#email').value,
+        favorite: document.querySelector('#favorite').checked,
         firebaseKey
       };
 
