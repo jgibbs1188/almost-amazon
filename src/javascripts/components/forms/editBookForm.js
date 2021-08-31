@@ -1,6 +1,8 @@
+import clearDom from '../../helpers/data/clearDom';
+
 const editBookForm = (bookObject) => {
-  document.querySelector('#store').innerHTML = '';
-  document.querySelector('#add-button').innerHTML = '';
+  clearDom();
+
   document.querySelector('#form-container').innerHTML = `
     <form id="edit-book-form" class="mb-4">
       <div class="form-group">
