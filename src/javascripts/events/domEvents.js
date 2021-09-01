@@ -8,7 +8,6 @@ import {
 import { showBooks } from '../components/books';
 import { showAuthors } from '../components/authors';
 import {
-  deleteAuthor,
   createAuthor,
   updateAuthor,
   getSingleAuthor
@@ -17,7 +16,7 @@ import addAuthorForm from '../components/forms/addAuthorForm';
 import editAuthorForm from '../components/forms/editAuthorForm';
 import viewBook from '../components/viewBook';
 import viewAuthor from '../components/viewAuthor';
-import { viewAuthorBooks, viewBookDetails } from '../helpers/data/mergedData';
+import { deleteAuthorBooks, viewAuthorBooks, viewBookDetails } from '../helpers/data/mergedData';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -87,7 +86,7 @@ const domEvents = () => {
       // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
         const [, id] = e.target.id.split('--');
-        deleteAuthor(id).then(showAuthors);
+        deleteAuthorBooks(id).then(showAuthors);
       }
     }
     // ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR

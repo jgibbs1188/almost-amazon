@@ -28,10 +28,10 @@ const getSingleBook = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // GET ALL BOOKS BY ONE AUTHOR
-const getAuthorsBooks = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/books.json?orderBy="author_id"&equalTo="${firebaseKey}"`)
-    .then((response) => resolve(response.data))
-    .catch((errors) => reject(errors));
+const getAuthorsBooks = (authorFirebaseKey) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/books.json?orderBy="author_id"&equalTo="${authorFirebaseKey}"`)
+    .then((response) => resolve(Object.values(response.data)))
+    .catch(reject);
 });
 
 // CREATE BOOK

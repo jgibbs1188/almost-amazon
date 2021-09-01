@@ -1,5 +1,5 @@
-import { getSingleAuthor } from './authorData';
-import { getAuthorsBooks, getSingleBook } from './bookData';
+import { deleteAuthor, getSingleAuthor } from './authorData';
+import { deleteBook, getAuthorsBooks, getSingleBook } from './bookData';
 
 const viewBookDetails = (bookFirebaseKey) => new Promise((resolve, reject) => {
   getSingleBook(bookFirebaseKey)
@@ -11,31 +11,27 @@ const viewBookDetails = (bookFirebaseKey) => new Promise((resolve, reject) => {
     }).catch(reject);
 });
 
-// const viewBookDetails = (firebaseKey) => (async () => {
+// const viewBookDetails = async (firebaseKey) => {
 //   const book = await getSingleBook(firebaseKey);
-//   const author = await getSingleAuthor(book.author_id);
-//   return ({ author, ...book });
+//   const authorObject = await getSingleAuthor(book.author_id);
+//   return ({ authorObject, ...book });
 // })().catch(console.warn);
 
-const viewAuthorBooks = (bookObject) => new Promise((resolve, reject) => {
-  getAuthorsBooks()
-    .then(() => {
-      getAuthorsBooks(bookObject.firebaseKey)
-        .then(() => {
-          resolve([]);
+const viewAuthorBooks = (firebaseKey) => new Promise((resolve, reject) => {
+  getSingleAuthor(firebaseKey)
+    .then((authorObject) => {
+      getAuthorsBooks(authorObject.firebaseKey)
+        .then((bookObject) => {
+          resolve({ book: bookObject, ...authorObject });
         });
     }).catch(reject);
 });
 
-// const updateBook = (bookObj) => new Promise((resolve, reject) => {
-//     axios.patch(`${dbUrl}/books/${bookObj.firebaseKey}.json`, bookObj)
-//       .then(() => getBooks().then(resolve))
-//       .catch(reject);
-//   });
+const deleteAuthorBooks = (authorId) => new Promise((resolve, reject) => {
+  getAuthorsBooks(authorId).then((authorsBookArray) => {
+    const deleteBooks = authorsBookArray.map((book) => deleteBook(book.firebaseKey));
+    Promise.all([...deleteBooks]).then(() => resolve(deleteAuthor(authorId)));
+  }).catch(reject);
+});
 
-// const viewAuthorBooks = () => {
-//     let domString = `<p class="text-white ms-5 details" id="authoredBooks">${showAuthorsBooks()}</p>`;
-//     document.querySelector('#authoredBooks').innerHTML = domString;
-//   };
-
-export { viewBookDetails, viewAuthorBooks };
+export { viewBookDetails, viewAuthorBooks, deleteAuthorBooks };
