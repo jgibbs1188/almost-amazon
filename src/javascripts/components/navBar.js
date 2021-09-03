@@ -38,7 +38,6 @@ const navBar = () => {
             />
             </li>
           </ul>
-          <div id="cart-button"></div>
           <div id="logout-button"></div>
         </div>
       </nav>

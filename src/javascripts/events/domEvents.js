@@ -1,9 +1,12 @@
 import addBookForm from '../components/forms/addBookForm';
 import {
   createBook,
+  createReview,
   deleteBook,
+  getBookReviews,
   getSingleBook,
-  updateBook
+  updateBook,
+  viewBookReviews
 } from '../helpers/data/bookData';
 import { showBooks } from '../components/books';
 import { showAuthors } from '../components/authors';
@@ -17,6 +20,7 @@ import editAuthorForm from '../components/forms/editAuthorForm';
 import viewBook from '../components/viewBook';
 import viewAuthor from '../components/viewAuthor';
 import { deleteAuthorBooks, viewAuthorBooks, viewBookDetails } from '../helpers/data/mergedData';
+import { showReviews } from '../components/reviews';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -55,6 +59,23 @@ const domEvents = () => {
       const [, id] = e.target.id.split('--');
 
       getSingleBook(id).then((bookObj) => addBookForm(bookObj));
+    }
+
+    // CLICK EVENT TO FOR THE REVIEW BUTTON
+    if (e.target.id.includes('review-book')) {
+      const [, firebaseKey] = e.target.id.split('--');
+
+      getBookReviews(firebaseKey).then(showReviews);
+    }
+
+    // CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
+    if (e.target.id.includes('review-book')) {
+      e.preventDefault();
+      const reviewObject = {
+        reviews: []
+      };
+
+      createReview(reviewObject).then((reviewsArray) => viewBookReviews(reviewsArray));
     }
 
     // CLICK EVENT FOR EDITING A BOOK
