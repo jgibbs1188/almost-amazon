@@ -61,6 +61,35 @@ const booksOnSale = () => new Promise((resolve, reject) => {
   // This works too .catch(reject);
 });
 
+// GET ALL REVIEWS FOR ONE BOOK
+const getBookReviews = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/books/${firebaseKey}/reviews.json`)
+    .then((response) => resolve(response))
+    .catch(reject);
+});
+
+// VIEW ALL REVIEWS ON ONE BOOK
+const viewBookReviews = (bookFirebaseKey) => new Promise((resolve, reject) => {
+  getSingleBook(bookFirebaseKey)
+    .then((bookObject) => {
+      getBookReviews(bookObject.author_id)
+        .then((authorObject) => {
+          resolve({ authorObject, ...bookObject });
+        });
+    }).catch(reject);
+});
+
+// CREATE REVIEW
+const createReview = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.post(`${dbUrl}/books/${firebaseKey}/reviews.json`)
+    .then((response) => {
+      const newReviewItem = response.data.name;
+      axios.patch(`${dbUrl}/books/${firebaseKey}.json`, { newReviewItem })
+        .then(() => getBookReviews().then(() => resolve(viewBookReviews)));
+    })
+    .catch((errors) => reject(errors));
+});
+
 export {
   getBooks,
   createBook,
@@ -68,5 +97,8 @@ export {
   deleteBook,
   getSingleBook,
   updateBook,
-  getAuthorsBooks
+  getAuthorsBooks,
+  viewBookReviews,
+  getBookReviews,
+  createReview
 };

@@ -18,6 +18,7 @@ const viewBook = (obj) => {
       <div class="mt-5">
               <i id="edit-book-btn--${obj.firebaseKey}" class="fas fa-edit btn btn-info"></i>
               <i id="delete-book--${obj.firebaseKey}" class="btn btn-danger fas fa-trash-alt"></i>
+              <i id="review-book--${obj.firebaseKey}" class="btn btn-warning fas fa-sticky-note"></i>
         </div>    
      </div>
     </div>`;
