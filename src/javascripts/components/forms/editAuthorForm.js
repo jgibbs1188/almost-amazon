@@ -1,6 +1,6 @@
 import clearDom from '../../helpers/data/clearDom';
 
-const editAuthorForm = (authorObj) => {
+const editAuthorForm = (uid, authorObj) => {
   clearDom();
 
   document.querySelector('#form-container').innerHTML = `
