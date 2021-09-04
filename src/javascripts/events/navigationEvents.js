@@ -5,7 +5,7 @@ import { getAuthors, favoriteAuthors } from '../helpers/data/authorData';
 import { booksOnSale, getBooks } from '../helpers/data/bookData';
 
 // navigation events
-const navigationEvents = () => {
+const navigationEvents = (uid) => {
   // LOGOUT BUTTON
   document.querySelector('#logout-button')
     .addEventListener('click', signOut);
@@ -17,7 +17,7 @@ const navigationEvents = () => {
 
   // ALL BOOKS
   document.querySelector('#all-books').addEventListener('click', () => {
-    getBooks().then(showBooks);
+    getBooks(uid).then(showBooks);
   });
 
   // SEARCH
@@ -38,7 +38,7 @@ const navigationEvents = () => {
   // FIXME: STUDENTS Create an event listener for the Authors
 
   document.querySelector('#authors').addEventListener('click', () => {
-    getAuthors().then(showAuthors);
+    getAuthors(uid).then(showAuthors);
   });
 
   // Favorite Authors
