@@ -2,7 +2,7 @@ import selectAuthor from './selectAuthor';
 import { createBookSubmitEvent } from '../../events/formEvents';
 import clearDom from '../../helpers/data/clearDom';
 
-const addBookForm = (obj = {}) => {
+const addBookForm = (userId, obj = {}) => {
   clearDom();
 
   document.querySelector('#form-container').innerHTML = `
@@ -33,7 +33,7 @@ const addBookForm = (obj = {}) => {
         id="${obj.firebaseKey ? `update-book--${obj.firebaseKey}` : 'submit-book'}" class="btn btn-primary">Submit Book</button>
     </form>`;
 
-  selectAuthor(`${obj.author_id || ''}`);
+  selectAuthor(userId, `${obj.author_id || ''}`);
 
   document.querySelector('#submit-book-form').addEventListener('submit', createBookSubmitEvent);
 };

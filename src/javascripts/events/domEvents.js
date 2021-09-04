@@ -22,7 +22,7 @@ import viewAuthor from '../components/viewAuthor';
 import { deleteAuthorBooks, viewAuthorBooks, viewBookDetails } from '../helpers/data/mergedData';
 import { showReviews } from '../components/reviews';
 
-const domEvents = () => {
+const domEvents = (uid) => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
     // CLICK EVENT FOR DELETING A BOOK
     if (e.target.id.includes('delete-book')) {
@@ -30,13 +30,13 @@ const domEvents = () => {
       if (window.confirm('Want to delete?')) {
         const [, id] = e.target.id.split('--');
 
-        deleteBook(id).then(showBooks);
+        deleteBook(id, uid).then(showBooks);
       }
     }
 
     // CLICK EVENT FOR SHOWING FORM FOR ADDING A BOOK
     if (e.target.id.includes('add-book-btn')) {
-      addBookForm();
+      addBookForm(uid);
     }
 
     // CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
@@ -48,7 +48,8 @@ const domEvents = () => {
         price: document.querySelector('#price').value,
         description: document.querySelector('#description').value,
         sale: document.querySelector('#sale').checked,
-        author_id: document.querySelector('#select-author').value
+        author_id: document.querySelector('#select-author').value,
+        uid
       };
 
       createBook(bookObject).then((booksArray) => showBooks(booksArray));
@@ -58,7 +59,7 @@ const domEvents = () => {
     if (e.target.id.includes('edit-book-btn')) {
       const [, id] = e.target.id.split('--');
 
-      getSingleBook(id).then((bookObj) => addBookForm(bookObj));
+      getSingleBook(id).then((bookObj) => addBookForm(uid, bookObj));
     }
 
     // CLICK EVENT TO FOR THE REVIEW BUTTON
@@ -68,7 +69,7 @@ const domEvents = () => {
       getBookReviews(firebaseKey).then(showReviews);
     }
 
-    // CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
+    // CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK REVIEW
     if (e.target.id.includes('review-book')) {
       e.preventDefault();
       const reviewObject = {
@@ -92,7 +93,7 @@ const domEvents = () => {
         firebaseKey
       };
 
-      updateBook(bookObject).then(showBooks);
+      updateBook(uid, bookObject).then(showBooks);
     }
 
     // CLICK EVENT TO VIEW A BOOK
@@ -107,12 +108,13 @@ const domEvents = () => {
       // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
         const [, id] = e.target.id.split('--');
-        deleteAuthorBooks(id).then(showAuthors);
+        deleteAuthorBooks(id, uid).then(showAuthors);
       }
     }
+
     // ADD CLICK EVENT FOR SHOWING FORM FOR ADDING AN AUTHOR
     if (e.target.id.includes('add-author-btn')) {
-      addAuthorForm();
+      addAuthorForm(uid);
     }
 
     // ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
@@ -124,7 +126,8 @@ const domEvents = () => {
         first_name: document.querySelector('#firstName').value,
         last_name: document.querySelector('#lastName').value,
         favorite: document.querySelector('#favorite').checked,
-        firebaseKey
+        firebaseKey,
+        uid
       };
 
       createAuthor(authorObject).then(showAuthors);
@@ -134,7 +137,7 @@ const domEvents = () => {
     if (e.target.id.includes('edit-author-btn')) {
       const [, id] = e.target.id.split('--');
 
-      getSingleAuthor(id).then((authorObj) => editAuthorForm(authorObj));
+      getSingleAuthor(id).then((authorObj) => editAuthorForm(uid, authorObj));
     }
 
     // CLICK EVENT FOR EDITING AN AUTHOR
@@ -149,7 +152,7 @@ const domEvents = () => {
         firebaseKey
       };
 
-      updateAuthor(authorObject).then(showAuthors);
+      updateAuthor(authorObject, uid).then(showAuthors);
     }
 
     // CLICK EVENT TO VIEW AN AUTHOR
