@@ -54,11 +54,13 @@ const updateBook = (bookObj) => new Promise((resolve, reject) => {
 // SEARCH BOOKS
 
 // FILTER BOOKS ON SALE
-const booksOnSale = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/books.json?orderBy="sale"&equalTo=true`)
-    .then((response) => resolve(Object.values(response.data)))
-    .catch((error) => reject(error));
-  // This works too .catch(reject);
+const booksOnSale = (userId) => new Promise((resolve, reject) => {
+  getBooks(userId)
+    .then((userBooksArray) => {
+      const onSaleBooks = userBooksArray.filter((book) => book.sale);
+      resolve(onSaleBooks);
+    })
+    .catch(reject);
 });
 
 // GET ALL REVIEWS FOR ONE BOOK

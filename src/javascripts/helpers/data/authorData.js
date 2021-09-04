@@ -48,11 +48,13 @@ const updateAuthor = (authorObj) => new Promise((resolve, reject) => {
 // SEARCH AUTHORS
 
 // FAVORITE AUTHORS
-const favoriteAuthors = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/authors.json?orderBy="favorite"&equalTo=true`)
-    .then((response) => resolve(Object.values(response.data)))
-    .catch((error) => reject(error));
-  // This works too .catch(reject);
+const favoriteAuthors = (userId) => new Promise((resolve, reject) => {
+  getAuthors(userId)
+    .then((userAuthorsArray) => {
+      const usersFavoriteAuthors = userAuthorsArray.filter((author) => author.favorite);
+      resolve(usersFavoriteAuthors);
+    })
+    .catch(reject);
 });
 
 export {
