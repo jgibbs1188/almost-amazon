@@ -12,7 +12,7 @@ const navigationEvents = (uid) => {
 
   // BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
-    booksOnSale().then(showBooks);
+    booksOnSale(uid).then(showBooks);
   });
 
   // ALL BOOKS
@@ -43,7 +43,7 @@ const navigationEvents = (uid) => {
 
   // Favorite Authors
   document.querySelector('#favorite-authors').addEventListener('click', () => {
-    favoriteAuthors().then(showAuthors);
+    favoriteAuthors(uid).then(showAuthors);
   });
 
   // 1. When a user clicks the authors link, make a call to firebase to get all authors
